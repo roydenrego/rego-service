@@ -6,6 +6,8 @@ const request = require('request');
 const Contact = require('../models/contact');
 const sgMail = require('@sendgrid/mail');
 
+require('dotenv').config();
+
 module.exports.post = async event => {
     mongoose.connect(process.env.DB_CONN, { useNewUrlParser: true, useUnifiedTopology: true });
 

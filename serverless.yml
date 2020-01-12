@@ -23,6 +23,7 @@ org: roydenrego
 provider:
   name: aws
   runtime: nodejs12.x
+  region: ap-southeast-1
   #environment:
    # DB_CONN: ${file(./config/envVars.js):getEnvVars.value1}
 
@@ -62,8 +63,10 @@ provider:
 functions:
   authorizer:
     handler: services/authorizer.handler
+    memorySize: 128
   portfolio:
     handler: services/portfolio.get
+    memorySize: 128
     events:
       - http:
           path: v1/portfolio
@@ -75,6 +78,7 @@ functions:
             type: request
   contact:
     handler: services/contact-sub.post
+    memorySize: 128
     events:
       - http:
           path: v1/contact
@@ -136,6 +140,7 @@ plugins:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
 resources:
   Resources:
     GatewayResponse:
