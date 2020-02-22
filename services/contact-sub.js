@@ -18,7 +18,6 @@ module.exports.post = async event => {
         !(data.email && data.email.trim()) ||
         !(data.message && data.message.trim())) {
         return Util.response(400, {
-            statusCode: 400,
             status: "Bad Request",
             message: "Invalid Request"
         });
@@ -28,7 +27,6 @@ module.exports.post = async event => {
         //Send JSON response
         console.log(`The Captcha wasn't solved`);
         return Util.response(400, {
-            statusCode: 400,
             status: "Bad Request",
             message: "Please select Captcha"
         });
@@ -43,7 +41,6 @@ module.exports.post = async event => {
         request(verificationUrl, function (error, response, body) {
             if (error) {
                 resolve(Util.response(500, {
-                    statusCode: 500,
                     status: "Internal Server Error"
                 }));
             }
@@ -53,7 +50,6 @@ module.exports.post = async event => {
             if (body.success !== undefined && !body.success) {
                 console.log('Captcha Verification failed');
                 resolve(Util.response(400, {
-                    statusCode: 400,
                     status: "Bad Request",
                     message: "Captcha Verification failed"
                 }));
@@ -104,7 +100,7 @@ module.exports.post = async event => {
                 sgMail.send(usrMsg);
 
                 //Send JSON response
-                resolve(Util.response(200, { statuscode: 200, status: "ok" }));
+                resolve(Util.response(200, { status: "ok", data: {} }));
 
             });
         })

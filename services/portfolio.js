@@ -1,5 +1,7 @@
 'use strict';
 
+const Util = require('../util');
+
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -13,6 +15,7 @@ module.exports.get = async event => {
       .sort({ created_at: -1 })
       .exec((err, data) => {
         if (err) {
+          console.log(err);
           reject(err);
         }
         resolve(data);
@@ -21,18 +24,8 @@ module.exports.get = async event => {
 
   let result = await promise;
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      statusCode: 200,
-      status: "ok",
-      data: result
-    },
-      null,
-      2
-    ),
-  };
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+  return Util.response(200, {
+    status: "ok",
+    data: result
+  });
 };

@@ -25,6 +25,7 @@ functions:
       - http:
           path: v1/portfolio
           method: get
+          cors: true
           authorizer:
             name: authorizer
             resultTtlInSeconds: 0
@@ -37,6 +38,7 @@ functions:
       - http:
           path: v1/contact
           method: post
+          cors: true
           authorizer:
             name: authorizer
             resultTtlInSeconds: 0
@@ -53,6 +55,8 @@ resources:
       Properties:
         ResponseParameters:
           gatewayresponse.header.WWW-Authenticate: "'Basic'"
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
         ResponseType: UNAUTHORIZED
         RestApiId:
           Ref: 'ApiGatewayRestApi'
