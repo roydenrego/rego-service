@@ -24,7 +24,7 @@ module.exports.get = async event => {
 
   let result = await promise;
 
-  return Util.response(200, {
+  return Util.response(event, 200, {
     status: "ok",
     data: result
   });

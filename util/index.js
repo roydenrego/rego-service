@@ -1,9 +1,10 @@
 class Util {
-    static response(statusCode, data) {
+    static response(event, statusCode, data) {
+        console.log('origin', event.headers.origin);
         return {
             statusCode: statusCode,
             headers: {
-                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Origin': event.headers.origin,
                 'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify(data,
