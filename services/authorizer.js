@@ -3,16 +3,15 @@
 require('dotenv').config();
 
 module.exports.handler = async (event, context, callback) => {
-    var authorizationHeader = event.headers.Authorization
-    console.log(authorizationHeader);
+    console.log(event);
+
+    var authorizationHeader = event.headers.Authorization || event.headers.authorization;
     if (!authorizationHeader) return callback('Unauthorized')
 
     var encodedCreds = authorizationHeader.split(' ')[1]
     var plainCreds = (new Buffer(encodedCreds, 'base64')).toString().split(':')
     var username = plainCreds[0]
     var password = plainCreds[1]
-
-    console.log(username, password);
 
     if (!(username === process.env.AUTH_KEY && password === process.env.AUTH_SECRET)) return callback('Unauthorized')
 

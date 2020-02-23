@@ -7,13 +7,8 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: ap-southeast-1
-  cfnRole: arn:aws:iam::803457684796:role/cfn-role
-  #environment:
-   # DB_CONN: ${file(./config/envVars.js):getEnvVars.value1}
-
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
+  cfnRole: ${param:cfnRole}
+  # stage: dev
 
 functions:
   authorizer:
@@ -27,7 +22,7 @@ functions:
           path: v1/portfolio
           method: get
           cors: ${self:custom.cors}
-          # authorizer: ${self:custom.authorizer}
+          authorizer: ${self:custom.authorizer}
   contact:
     handler: services/contact-sub.post
     memorySize: ${self:custom.memorySize}
@@ -36,7 +31,7 @@ functions:
           path: v1/contact
           method: post
           cors: ${self:custom.cors}
-          # authorizer: ${self:custom.authorizer}
+          authorizer: ${self:custom.authorizer}
 plugins:
   - serverless-offline
   - serverless-domain-manager
@@ -66,6 +61,8 @@ custom:
     origins:
       - 'http://react.roydenrego.com'
       - 'https://react.roydenrego.com'
+      - 'http://roydenrego.com'
+      - 'https://roydenrego.com'
     headers:
       - Content-Type
       - X-Amz-Date
@@ -80,18 +77,3 @@ custom:
     createRoute53Record: true
     certificateArn: ${param:certificate_arn}
     endpointType: 'regional'
-
-          # cors:
-          #   origin: 'http://localhost:3000'
-          #   headers:
-          #     - Content-Type
-          #     - X-Amz-Date
-          #     - Authorization
-          #     - X-Api-Key
-          #     - X-Amz-Security-Token
-          #     - X-Amz-User-Agent
-          #     - Access-Control-Allow-Origin
-          #     - Access-Control-Allow-Credentials
-          #   allowCredentials: true
-      # gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-      #     gatewayresponse.header.Access-Control-Allow-Headers: "'*'"

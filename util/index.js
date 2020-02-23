@@ -1,6 +1,5 @@
 class Util {
     static response(event, statusCode, data) {
-        console.log('origin', event.headers.origin);
         return {
             statusCode: statusCode,
             headers: {
